@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
@@ -57,18 +56,6 @@ const User = mongoose.model('User', UserSchema);
 const Media = mongoose.model('Media', MediaSchema);
 const Comment = mongoose.model('Comment', CommentSchema);
 const Download = mongoose.model('Download', DownloadSchema);
-
-// Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    if (!fs.existsSync('uploads/')) fs.mkdirSync('uploads/');
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-const upload = multer({ storage });
 
 // Auth middleware
 const auth = async (req, res, next) => {
